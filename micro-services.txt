@@ -1,2 +1,21 @@
 示例工程名称：blog-microservices
 示例工程blog地址：http://callistaenterprise.se/blogg/teknik/2015/04/10/building-microservices-with-spring-cloud-and-netflix-oss-part-1/
+
+
+spring security oauth server 获取授权码的过程【详见authserver工程】:
+第一步：
+
+http://localhost:8080/uaa/oauth/authorize?client_id=acme&response_type=code&redirect_uri=http://www.baidu.com
+
+第二步：输入用户名和密码：user/password
+点击 approve
+获取产生的code的值，如：vFw5Io
+
+
+第三步：
+http://localhost:8080/uaa/getToken
+输入第二步获取的code值，然后提交！需要将用户名和密码根据HttpBasic加密后放到Header中
+
+
+也可以采用下面的方式：
+curl -X POST -H "Cache-Control: no-cache" -H "Content-Type:application/x-www-form-urlencoded" -d "grant_type=authorization_code&code=sV1Vph&redirect_uri=http://www.baidu.com" "http://acme:acmesecret@localhost:8080/uaa/oauth/token"
